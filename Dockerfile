@@ -73,7 +73,13 @@ RUN rm -fr /root/tmp
 
 ENV PATH /root/.cabal/bin:$PATH
 
+# Updating Cabal library
+RUN cabal update
+RUN cabal install Cabal-1.22.0.0 \
+ && ghc-pkg hide Cabal-1.18.1.5
+
 RUN cabal --version
+RUN ghc-pkg list Cabal
 
 WORKDIR /
 
