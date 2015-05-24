@@ -48,7 +48,7 @@ RUN mkdir /root/tmp
 WORKDIR /root/tmp/sources
 RUN wget http://downloads.haskell.org/~ghc/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
   && echo '20b5731d268613bbf6e977dbb192a3a3b7b78d954c35edbfca4fb36b652e24f7  ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2' | sha256sum -c - \
-  && tar --strip-components=1 -xjf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
+  && tar --strip-components=1 -xjvf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
   && rm ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
   && ./configure \
   && make install \
