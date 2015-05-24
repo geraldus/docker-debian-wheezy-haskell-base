@@ -12,9 +12,22 @@ RUN echo \
 # fish shell requires TERM to be set
 ENV TERM xterm
 
-# Basic tools
 RUN apt-get update
-RUN apt-get install fish -y --no-install-recommends
+
+
+# Basic tools
+RUN apt-get install -y --no-install-recommends \
+            locales \
+            fish \
+            git
+
+
+# Locale setup
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+ && locale-gen \
+ && update-locale LANG=en_US.UTF-8 \
+ && echo ": ${LANG=en_US.utf8}; export LANG" >> /etc/profile \
+ && echo "set -xg LANG en_US.utf8" >> ~/.config/fish/config.fish
 
 # GHC Dependencies
 RUN apt-get install -y --no-install-recommends \
