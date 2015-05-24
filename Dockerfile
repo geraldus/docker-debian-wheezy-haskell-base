@@ -2,7 +2,6 @@ FROM debian:wheezy
 
 MAINTAINER Geraldus <heraldhoi@gmail.com>
 
-
 # Preparations for fish 2.0 installation
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key D880C8E4
 RUN echo \
@@ -52,12 +51,12 @@ RUN wget http://downloads.haskell.org/~ghc/7.8.4/ghc-7.8.4-x86_64-unknown-linux-
   && rm ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
   && ./configure \
   && make install \
-  && rm -rf /usr/src/ghc
+  && rm -fr /usr/src/ghc
+WORKDIR /
 
 RUN ghc --version
 
-# Cabal-version
-RUN mkdir /root/tmp
+# cabal-install
 WORKDIR /root/tmp
 
 RUN git clone https://github.com/haskell/cabal.git
@@ -66,10 +65,6 @@ WORKDIR cabal
 RUN git checkout tags/cabal-install-v1.22.0.0
 WORKDIR cabal-install
 RUN ./bootstrap.sh
-RUN rm -fr /root/tmp
-
-# && for pkg in `ghc-pkg --user list  --simple-output`; do ghc-pkg unregister --force $pkg; done \
-# && rm -rf /root/.cabal \
 
 ENV PATH /root/.cabal/bin:$PATH
 
@@ -81,9 +76,14 @@ RUN cabal install Cabal-1.22.0.0 \
 RUN cabal --version
 RUN ghc-pkg list Cabal
 
+# Cleanup
 WORKDIR /
+RUN rm -fr /root/tmp/*
+
+# RUN for pkg in `ghc-pkg --user list  --simple-output`; \
+#       do ghc-pkg unregister --force $pkg; \
+#     done
 
 RUN rm -rf /var/lib/apt/lists/*
-
 
 CMD ["ghci"]
