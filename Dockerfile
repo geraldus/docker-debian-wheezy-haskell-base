@@ -22,6 +22,8 @@ RUN apt-get install -y --no-install-recommends \
 
 
 # Locale setup
+RUN mkdir -p ~/.config/fish
+
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && locale-gen \
  && update-locale LANG=en_US.UTF-8 \
