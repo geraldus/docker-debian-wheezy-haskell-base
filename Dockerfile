@@ -86,6 +86,12 @@ RUN rm -fr /root/tmp/*
 #       do ghc-pkg unregister --force $pkg; \
 #     done
 
+# Stack support
+
+CMD useradd -m -U -s /bin/bash stack
+CMD passwd -d stack
+CMD su stack -c "mkdir /home/stack/.stack"
+
 RUN rm -rf /var/lib/apt/lists/*
 
-CMD ["ghci"]
+CMD ["fish"]
