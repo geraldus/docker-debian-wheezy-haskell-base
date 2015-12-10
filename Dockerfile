@@ -34,14 +34,20 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
 RUN apt-get install -y --no-install-recommends \
             bzip2 \
             ca-certificates \
-            gcc \
             libc6-dev \
             libgmp-dev \
             libgmp10 \
             make \
             patch \
             wget \
-            zlib1g-dev
+            zlib1g-dev \
+            autoconf \
+            automake \
+            libtool \
+            ncurses-dev \
+            g++ \
+            python
+            # gcc \
 
 RUN mkdir /root/tmp
 
