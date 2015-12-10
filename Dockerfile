@@ -94,9 +94,9 @@ RUN rm -fr /root/tmp/*
 
 # Stack support
 
-CMD useradd -m -U -s /bin/bash stack
-CMD passwd -d stack
-CMD su stack -c "mkdir /home/stack/.stack"
+RUN useradd -m -U -s /bin/bash stack -p "stack"
+RUN passwd -d stack
+RUN su stack -c "mkdir /home/stack/.stack"
 
 RUN rm -rf /var/lib/apt/lists/*
 
