@@ -45,38 +45,38 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN mkdir /root/tmp
 
-# GHC itself
-WORKDIR /root/tmp/sources
-RUN wget http://downloads.haskell.org/~ghc/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
-  && echo '20b5731d268613bbf6e977dbb192a3a3b7b78d954c35edbfca4fb36b652e24f7  ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2' | sha256sum -c - \
-  && tar --strip-components=1 -xjvf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
-  && rm ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
-  && ./configure \
-  && make install \
-  && rm -fr /usr/src/ghc
-WORKDIR /
+# # GHC itself
+# WORKDIR /root/tmp/sources
+# RUN wget http://downloads.haskell.org/~ghc/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
+#   && echo '20b5731d268613bbf6e977dbb192a3a3b7b78d954c35edbfca4fb36b652e24f7  ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2' | sha256sum -c - \
+#   && tar --strip-components=1 -xjvf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
+#   && rm ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2 \
+#   && ./configure \
+#   && make install \
+#   && rm -fr /usr/src/ghc
+# WORKDIR /
 
-RUN ghc --version
+# RUN ghc --version
 
-# cabal-install
-WORKDIR /root/tmp
+# # cabal-install
+# WORKDIR /root/tmp
 
-RUN git clone https://github.com/haskell/cabal.git
+# RUN git clone https://github.com/haskell/cabal.git
 
-WORKDIR cabal
-RUN git checkout tags/cabal-install-v1.22.0.0
-WORKDIR cabal-install
-RUN ./bootstrap.sh
+# WORKDIR cabal
+# RUN git checkout tags/cabal-install-v1.22.0.0
+# WORKDIR cabal-install
+# RUN ./bootstrap.sh
 
-ENV PATH /root/.cabal/bin:$PATH
+# ENV PATH /root/.cabal/bin:$PATH
 
-# Updating Cabal library
-RUN cabal update
-RUN cabal install Cabal-1.22.0.0 \
- && ghc-pkg hide Cabal-1.18.1.5
+# # Updating Cabal library
+# RUN cabal update
+# RUN cabal install Cabal-1.22.0.0 \
+#  && ghc-pkg hide Cabal-1.18.1.5
 
-RUN cabal --version
-RUN ghc-pkg list Cabal
+# RUN cabal --version
+# RUN ghc-pkg list Cabal
 
 # Cleanup
 WORKDIR /
