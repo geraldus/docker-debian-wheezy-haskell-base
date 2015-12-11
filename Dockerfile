@@ -49,14 +49,10 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN mkdir /root/tmp
 
-
 # Cleanup
 WORKDIR /
 RUN rm -fr /root/tmp/*
-
-# RUN for pkg in `ghc-pkg --user list  --simple-output`; \
-#       do ghc-pkg unregister --force $pkg; \
-#     done
+RUN rm -fr /tmp/*
 
 # Stack support
 
