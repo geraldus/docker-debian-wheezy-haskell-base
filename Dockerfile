@@ -26,6 +26,15 @@ RUN apt-get update \
             python \
  && rm -rf /var/lib/apt/lists/*
 
+# POSTGRESQL 9.4
+RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
+ && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends \
+            postgresql-9.4 \
+            libpq-dev \
+ && rm -rf /var/lib/apt/lists/*
+
 # FISH SHELL 2.4.0
 RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/2:/2.4.0/Debian_7.0/ /' > /etc/apt/sources.list.d/fish.list \
  && wget -nv http://download.opensuse.org/repositories/shells:fish:release:2:2.4.0/Debian_7.0/Release.key -O Release.key \
