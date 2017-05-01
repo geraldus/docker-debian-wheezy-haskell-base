@@ -65,4 +65,17 @@ RUN useradd -m -U -s /bin/bash stack -p "stack" \
  && passwd -d stack \
  && su stack -c "mkdir /home/stack/.stack"
 
+# Stack installation
+
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 575159689BEFB442 \
+ && echo 'deb http://download.fpcomplete.com/debian jessie main' | tee /etc/apt/sources.list.d/fpco.list \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends stack \
+ && rm -rf /var/lib/apt/lists/*
+
+USER stack
+
+RUN stack upgrade \
+ && stack setup
+
 CMD ["fish"]
